@@ -1,4 +1,5 @@
 server:
+
   port: 8080
   servlet:
     # 应用的访问路径
@@ -19,6 +20,9 @@ mybatis:
   config-location: classpath:mybatis-config.xml
 
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   banner:
     charset: UTF-8
     location: banner.text
@@ -33,6 +37,9 @@ pagehelper:
   supportMethodsArguments: true
   params: count=countSql
 
+token:
+  expire-minutes: 30
+  secret: dfjsfer2334re2342fdsx.
 knife4j:
   enable: true
   production: false

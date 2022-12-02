@@ -40,7 +40,7 @@
     <!-- 日志文件输出 -->
     <appender name="file_error" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 设置日志不超过${log.max.size}时的保存路径，注意如果 是web项目会保存到Tomcat的bin目录 下 -->
-        <file>${log.base}/error/${log.moduleName}_error.log</file>
+        <file>${log.path}/error.%d{yyyy-MM-dd}.%i.log</file>
         <!-- 日志输出的文件的格式  -->
         <encoder>
             <pattern>${log.pattern}</pattern>

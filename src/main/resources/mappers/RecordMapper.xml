@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bty.blog.dao.RecordMapper">
+
+
+    <select id="selectCollectionList" resultType="com.bty.blog.entity.vo.CollectionVO">
+        select id, name
+        from collection
+    </select>
+
+    <select id="selectRecordList" resultType="com.bty.blog.entity.Record">
+        select cid, type, title, description, created
+        from record
+        order by created desc
+    </select>
+
+    <select id="selectRecordListByCollectionId" resultType="com.bty.blog.entity.Record">
+        select rc.cid, r.type, r.title, r.description, r.created
+        from record_collection rc
+                 left join record r on r.cid = rc.cid
+        where rc.collection_id = #{collectionId}
+        order by r.created desc
+    </select>
+</mapper>

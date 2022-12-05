@@ -1,5 +1,6 @@
 package com.bty.blog.service.impl;
 
+import com.bty.blog.entity.User;
 import com.bty.blog.service.TokenService;
 import com.bty.blog.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +39,12 @@ public class tokenServiceImpl implements TokenService {
     @Override
     public Object verifyToken(String jwt) {
         String uuid = jwtUtil.decodeUUID(jwt);
-        return redisTemplate.opsForValue().get(getTokenRedisKey(uuid));
+        User user  = (User)redisTemplate.opsForValue().getAndExpire(getTokenRedisKey(uuid), expireMinutes, TimeUnit.MINUTES);
+        if(user==null){
+            throw new RuntimeException("user not login");
+        }
+        return user;
     }
+
+
 }

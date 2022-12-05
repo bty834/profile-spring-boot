@@ -23,4 +23,19 @@ public class TimelineServiceImpl implements TimelineService {
     public List<Timeline> selectTimelineList() {
         return timelineMapper.selectTimelineList();
     }
+
+    @Override
+    public void createTimeline(Timeline timeline) {
+        timelineMapper.createTimeline(timeline);
+    }
+
+    @Override
+    public void updateTimeline(Timeline timeline) {
+        timelineMapper.updateTimeline(timeline);
+    }
+
+    @Override
+    public void deleteTimelineById(Integer timelineId) {
+        timelineMapper.deleteTimelineById(timelineId);
+    }
 }

@@ -25,6 +25,10 @@ import static com.bty.blog.util.CodecUtil.encryptBySHA256;
 @RequiredArgsConstructor
 public class LoginServiceImpl implements LoginService {
 
+    @Value("${password.secret}")
+    private String salt;
+
+
     private final UserMapper userMapper;
 
     private final TokenService tokenService;
@@ -39,7 +43,7 @@ public class LoginServiceImpl implements LoginService {
 
         String decodedPassword = new String(Base64.getDecoder().decode(loginDTO.getPassword()), StandardCharsets.UTF_8);
 
-        if(!user.getPassword().equals(encryptBySHA256(decodedPassword))){
+        if(!user.getPassword().equals(encryptBySHA256(decodedPassword,salt))){
             throw new RuntimeException("password not right");
         }
 

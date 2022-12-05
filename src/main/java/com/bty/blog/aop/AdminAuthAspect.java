@@ -41,9 +41,8 @@ public class AdminAuthAspect {
             throw new RuntimeException("not Bearer token");
         }
         String jwtToken = auth.substring(7);
-        User user = (User) tokenService.verifyToken(jwtToken);
-        if (user == null) {
-            throw new RuntimeException("user not login");
-        }
+        tokenService.verifyToken(jwtToken);
     }
+
+
 }

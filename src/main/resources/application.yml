@@ -36,7 +36,8 @@ pagehelper:
   helperDialect: mysql
   supportMethodsArguments: true
   params: count=countSql
-
+password:
+  secret: fde2.
 token:
   expire-minutes: 30
   secret: dfjsfer2334re2342fdsx.

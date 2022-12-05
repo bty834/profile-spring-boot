@@ -10,4 +10,5 @@ public interface TokenService {
     String initToken(Object user);
 
     Object verifyToken(String jwt);
+
 }

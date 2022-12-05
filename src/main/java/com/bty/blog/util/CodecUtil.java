@@ -12,8 +12,14 @@ import java.nio.charset.StandardCharsets;
 public class CodecUtil {
 
 
-    public static String encryptBySHA256(String source){
-        return Hashing.sha256().hashString(source, StandardCharsets.UTF_8).toString();
+    public static String encryptBySHA256(String source,String salt){
+        return Hashing.sha256().hashString(salt+source, StandardCharsets.UTF_8).toString();
+    }
+
+    public static void main(String[] args) {
+
+//        System.out.println(encryptBySHA256("", "fde2."));
+
     }
 
 }

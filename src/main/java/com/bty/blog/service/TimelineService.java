@@ -12,4 +12,11 @@ import java.util.List;
 public interface TimelineService {
 
     List<Timeline> selectTimelineList();
+
+
+    void createTimeline(Timeline timeline);
+
+    void updateTimeline(Timeline timeline);
+
+    void deleteTimelineById(Integer timelineId);
 }

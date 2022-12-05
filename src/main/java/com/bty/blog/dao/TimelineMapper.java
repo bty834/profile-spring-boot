@@ -1,6 +1,7 @@
 package com.bty.blog.dao;
 
 import com.bty.blog.entity.Timeline;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,6 +16,10 @@ public interface TimelineMapper {
 
     List<Timeline> selectTimelineList();
 
+    void createTimeline(@Param("timeline")Timeline timeline);
 
+    void updateTimeline(@Param("timeline")Timeline timeline);
+
+    void deleteTimelineById(@Param("timelineId")Integer timelineId);
 
 }

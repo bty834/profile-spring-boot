@@ -20,7 +20,7 @@ import java.util.Date;
 public class PostTag {
     private Integer id;
     private Integer postId;
-    private Integer tag_id;
+    private Integer tagId;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date created;
 }

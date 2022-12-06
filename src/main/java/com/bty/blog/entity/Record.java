@@ -20,8 +20,9 @@ import java.util.Date;
 @ToString
 @ApiModel("记录")
 public class Record {
-    private String cid;
-    private String cover_cid;
+    private Integer id;
+    private String url;
+    private String coverUrl;
     private String title;
     private String description;
     private Integer type;

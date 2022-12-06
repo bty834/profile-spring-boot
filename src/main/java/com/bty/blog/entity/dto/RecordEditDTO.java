@@ -19,7 +19,7 @@ import java.util.List;
 @ToString
 @ApiModel("记录修改")
 public class RecordEditDTO {
-    private String cid;
+    private Integer id;
     private String title;
     private String description;
     private List<Integer> collectionIdList;

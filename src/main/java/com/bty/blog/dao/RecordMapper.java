@@ -1,6 +1,7 @@
 package com.bty.blog.dao;
 
 import com.bty.blog.entity.Record;
+import com.bty.blog.entity.dto.RecordCreateDTO;
 import com.bty.blog.entity.vo.CollectionVO;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,11 +20,17 @@ public interface RecordMapper {
 
     List<Record> selectRecordListByCollectionId(Integer collectionId);
 
-    void editRecord(@Param("cid") String cid,@Param("title") String title,@Param("description") String description);
 
-    void insertRecordCollection(@Param("cid") String cid,@Param("collectionIdList") List<Integer> colletionIdList);
+    Integer insertRecord(@Param("record")RecordCreateDTO recordCreateDTO);
 
-    void deleteRecordByCid(String cid);
+    Integer editRecord(@Param("id")Integer id,@Param("title") String title,@Param("description") String description);
 
-    void deleteRecordCollectionByCid(String cid);
+    Integer insertRecordCollection(@Param("recordId") Integer id,@Param("collectionIdList") List<Integer> colletionIdList);
+
+    Integer deleteRecordById(Integer id);
+
+    Integer deleteRecordCollectionByRecordId(Integer id);
+
+
+    Integer selectRecordIdByTitle(String title);
 }

@@ -1,14 +1,10 @@
-package com.bty.blog.entity.dto;
+package com.bty.blog.entity.vo;
 
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.util.Date;
-import java.util.List;
 
 /**
  * @author bty
@@ -19,13 +15,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@ApiModel("记录添加")
-public class RecordCreateDTO {
-
+@ApiModel(value = "record上传信息")
+public class FileRecordVO {
     private String url;
     private String coverUrl;
-    private String title;
-    private String description;
     private Integer type;
-    private List<Integer> collectionIdList;
 }

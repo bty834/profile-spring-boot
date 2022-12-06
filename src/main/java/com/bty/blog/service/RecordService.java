@@ -24,6 +24,6 @@ public interface RecordService {
 
     void editRecord(RecordEditDTO recordEditDTO);
 
-    void deleteRecord(String cid);
+    void deleteRecord(Integer id);
 
 }

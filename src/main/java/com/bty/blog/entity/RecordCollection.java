@@ -16,6 +16,6 @@ import lombok.ToString;
 @ToString
 public class RecordCollection {
     private Integer id;
-    private String cid;
+    private Integer recordId;
     private Integer collectionId;
 }

@@ -44,8 +44,7 @@ public class RecordController {
     @ApiOperation(value = "新增Record")
     @PostMapping("/record")
     public Response uploadRecord(@RequestBody RecordCreateDTO recordCreateDTO){
-
-
+        recordService.uploadRecord(recordCreateDTO);
         return Response.success();
     }
 
@@ -60,9 +59,9 @@ public class RecordController {
 
     @Admin
     @ApiOperation(value = "删除Record")
-    @DeleteMapping("/record/{cid}")
-    public Response removeRecord(@PathVariable String cid){
-        recordService.deleteRecord(cid);
+    @DeleteMapping("/record/{recordId}")
+    public Response removeRecord(@PathVariable Integer recordId){
+        recordService.deleteRecord(recordId);
         return Response.success();
     }
 

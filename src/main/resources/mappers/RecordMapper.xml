@@ -5,28 +5,32 @@
 <mapper namespace="com.bty.blog.dao.RecordMapper">
     <insert id="insertRecordCollection">
         <if test="collectionIdList.size>0">
-            insert into record_collection (cid,collection_id) values
+            insert into record_collection (record_id,collection_id) values
             <foreach collection="collectionIdList" item="collectionId" separator="),(" open="(" close=")">
-                #{cid},#{collectionId}
+                #{recordId},#{collectionId}
             </foreach>
         </if>
+    </insert>
+    <insert id="insertRecord">
+        insert into record (url, cover_url, title, description, type)
+        values (#{record.url}, #{record.coverUrl}, #{record.title}, #{record.description}, #{record.type})
     </insert>
     <update id="editRecord">
         update record
         set title=#{title},
             description=#{description}
-        where cid = #{cid}
+        where id = #{id}
     </update>
 
-    <delete id="deleteRecordByCid">
+    <delete id="deleteRecordById">
         delete
         from record
-        where cid = #{cid}
+        where id = #{id}
     </delete>
-    <delete id="deleteRecordCollectionByCid">
+    <delete id="deleteRecordCollectionByRecordId">
         delete
         from record_collection
-        where cid = #{cid}
+        where record_id = #{id}
     </delete>
 
 
@@ -36,16 +40,19 @@
     </select>
 
     <select id="selectRecordList" resultType="com.bty.blog.entity.Record">
-        select cid, cover_cid, type, title, description, created
+        select id,url, cover_url, type, title, description, created
         from record
         order by created desc
     </select>
 
     <select id="selectRecordListByCollectionId" resultType="com.bty.blog.entity.Record">
-        select rc.cid, r.cover_cid, r.type, r.title, r.description, r.created
+        select rc.record_id,r.url, r.cover_url, r.type, r.title, r.description, r.created
         from record_collection rc
-                 left join record r on r.cid = rc.cid
+                 left join record r on r.id = rc.record_id
         where rc.collection_id = #{collectionId}
         order by r.created desc
+    </select>
+    <select id="selectRecordIdByTitle" resultType="java.lang.Integer">
+        select id from record where title=#{title} limit 1
     </select>
 </mapper>

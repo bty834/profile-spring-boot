@@ -39,22 +39,30 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     public void uploadRecord(RecordCreateDTO recordCreateDTO) {
+        if(recordCreateDTO.getCollectionIdList().size()<1){
+            throw new RuntimeException("collectionIdList.size() should >= 1");
+        }
 
+        recordMapper.insertRecord(recordCreateDTO);
+        Integer recordId = recordMapper.selectRecordIdByTitle(recordCreateDTO.getTitle());
+        recordMapper.deleteRecordCollectionByRecordId(recordId);
+        recordMapper.insertRecordCollection(recordId, recordCreateDTO.getCollectionIdList());
     }
+
 
     @Override
     public void editRecord(RecordEditDTO recordEditDTO) {
         if(recordEditDTO.getCollectionIdList().size()<1){
             throw new RuntimeException("collectionIdList.size() should >= 1");
         }
-        recordMapper.editRecord(recordEditDTO.getCid(), recordEditDTO.getTitle(), recordEditDTO.getDescription());
-        recordMapper.deleteRecordCollectionByCid(recordEditDTO.getCid());
-        recordMapper.insertRecordCollection(recordEditDTO.getCid(), recordEditDTO.getCollectionIdList());
+        recordMapper.editRecord(recordEditDTO.getId(), recordEditDTO.getTitle(), recordEditDTO.getDescription());
+        recordMapper.deleteRecordCollectionByRecordId(recordEditDTO.getId());
+        recordMapper.insertRecordCollection(recordEditDTO.getId(), recordEditDTO.getCollectionIdList());
     }
 
     @Override
-    public void deleteRecord(String cid) {
-        recordMapper.deleteRecordByCid(cid);
-        recordMapper.deleteRecordCollectionByCid(cid);
+    public void deleteRecord(Integer id) {
+        recordMapper.deleteRecordById(id);
+        recordMapper.deleteRecordCollectionByRecordId(id);
     }
 }

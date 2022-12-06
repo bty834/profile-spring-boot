@@ -1,7 +1,10 @@
 package com.bty.blog.controller;
 
+import com.bty.blog.annotation.Admin;
 import com.bty.blog.domain.Response;
 import com.bty.blog.entity.dto.CommentDTO;
+import com.bty.blog.entity.dto.PostCreateDTO;
+import com.bty.blog.entity.dto.PostEditDTO;
 import com.bty.blog.service.PostService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,6 +35,34 @@ public class PostController {
     public Response getPostDetailById(@PathVariable("postId") Integer postId){
         return Response.success(postService.selectPostDetailById(postId));
     }
+
+    @Admin
+    @ApiOperation(value = "新增post")
+    @PostMapping("/post")
+    public Response createPost(PostCreateDTO postCreateDTO){
+        postService.createPost(postCreateDTO);
+        return Response.success();
+    }
+
+    @Admin
+    @ApiOperation(value = "修改post")
+    @PutMapping("/post")
+    public Response editPost(PostEditDTO postEditDTO){
+        postService.editPost(postEditDTO);
+        return Response.success();
+    }
+
+    @Admin
+    @ApiOperation(value = "删除post")
+    @DeleteMapping("/post/{id}")
+    public Response removePost(@PathVariable Integer postId){
+        postService.removePost(postId);
+        return Response.success();
+    }
+
+
+
+
 
     @ApiOperation(value = "查询所有postId")
     @GetMapping("/postIdList")
@@ -83,6 +114,28 @@ public class PostController {
     public Response getTagIdList(){
         return Response.success(postService.selectTagIdList());
     }
+
+    @Admin
+    @ApiOperation(value = "添加tag")
+    @PostMapping("/tag/{tagName}")
+    public Response createTag(@PathVariable String tagName){
+        return Response.success(postService.insertTag(tagName));
+    }
+
+    @Admin
+    @ApiOperation(value = "修改tag")
+    @PutMapping("/tag")
+    public Response editTag(@RequestBody Integer tagId,String tagName){
+        return Response.success(postService.editTag(tagId,tagName));
+    }
+
+    @Admin
+    @ApiOperation(value = "修改tag")
+    @DeleteMapping("/tag/{tagId}")
+    public Response removeTag(@PathVariable Integer tagId){
+        return Response.success(postService.deleteTagById(tagId));
+    }
+
 
 
 }

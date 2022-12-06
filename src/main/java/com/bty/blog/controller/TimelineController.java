@@ -30,6 +30,9 @@ public class TimelineController {
     public Response getTimelineList(){
         return Response.success(timelineService.selectTimelineList());
     }
+
+
+    @Admin
     @ApiOperation(value = "添加timeline")
     @PostMapping("/timeline")
     public Response createTimeline(@RequestBody Timeline timeline){
@@ -37,6 +40,7 @@ public class TimelineController {
         return Response.success();
     }
 
+    @Admin
     @ApiOperation(value = "修改timeline")
     @PutMapping("/timeline")
     public Response updateTimeline(@RequestBody Timeline timeline){
@@ -44,11 +48,12 @@ public class TimelineController {
         return Response.success();
     }
 
+    @Admin
     @ApiOperation(value = "删除timeline")
     @DeleteMapping("/timeline/{timelineId}")
     public Response deleteTimeline(@PathVariable Integer timelineId){
         timelineService.deleteTimelineById(timelineId);
-        String s ="fdfds.png";
+        Runtime.getRuntime().availableProcessors();
         return Response.success();
     }
 }

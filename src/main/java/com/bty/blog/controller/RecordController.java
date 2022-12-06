@@ -1,13 +1,14 @@
 package com.bty.blog.controller;
 
+import com.bty.blog.annotation.Admin;
 import com.bty.blog.domain.Response;
+import com.bty.blog.entity.dto.RecordCreateDTO;
+import com.bty.blog.entity.dto.RecordEditDTO;
 import com.bty.blog.service.RecordService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author bty
@@ -39,7 +40,30 @@ public class RecordController {
         return Response.success(recordService.selectRecordListByCollectionId(collectionId));
     }
 
+    @Admin
+    @ApiOperation(value = "新增Record")
+    @PostMapping("/record")
+    public Response uploadRecord(@RequestBody RecordCreateDTO recordCreateDTO){
 
 
+        return Response.success();
+    }
+
+
+    @Admin
+    @ApiOperation(value = "修改Record")
+    @PutMapping("/record")
+    public Response editRecord(@RequestBody RecordEditDTO recordEditDTO){
+        recordService.editRecord(recordEditDTO);
+        return Response.success();
+    }
+
+    @Admin
+    @ApiOperation(value = "删除Record")
+    @DeleteMapping("/record/{cid}")
+    public Response removeRecord(@PathVariable String cid){
+        recordService.deleteRecord(cid);
+        return Response.success();
+    }
 
 }

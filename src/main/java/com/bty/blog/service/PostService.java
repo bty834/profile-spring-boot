@@ -1,6 +1,8 @@
 package com.bty.blog.service;
 
 import com.bty.blog.entity.dto.CommentDTO;
+import com.bty.blog.entity.dto.PostCreateDTO;
+import com.bty.blog.entity.dto.PostEditDTO;
 import com.bty.blog.entity.vo.*;
 
 import java.util.List;
@@ -31,4 +33,18 @@ public interface PostService {
 
     void insertComment(CommentDTO comment);
 
+    Integer insertPostTagList(Integer postId,List<Integer> tagIdList);
+
+    void editPost(PostEditDTO postEditDTO);
+
+    void createPost(PostCreateDTO postCreateDTO);
+
+    void removePost(Integer postId);
+
+
+    Integer insertTag(String tagName);
+
+    Integer deleteTagById(Integer tagId);
+
+    Integer editTag(Integer tagId,String tagName);
 }

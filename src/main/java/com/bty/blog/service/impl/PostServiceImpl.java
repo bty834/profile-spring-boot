@@ -2,6 +2,8 @@ package com.bty.blog.service.impl;
 
 import com.bty.blog.dao.PostMapper;
 import com.bty.blog.entity.dto.CommentDTO;
+import com.bty.blog.entity.dto.PostCreateDTO;
+import com.bty.blog.entity.dto.PostEditDTO;
 import com.bty.blog.entity.vo.*;
 import com.bty.blog.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -81,6 +83,65 @@ public class PostServiceImpl implements PostService {
     @Override
     public void insertComment(CommentDTO comment) {
         postMapper.insertComment(comment);
+    }
+
+    @Override
+    public Integer insertPostTagList(Integer postId, List<Integer> tagIdList) {
+        if(tagIdList.size()<1){
+            throw new RuntimeException("tagIdList.size should >=1");
+        }
+        return postMapper.insertPostTag(postId, tagIdList);
+
+    }
+
+    @Override
+    public void editPost(PostEditDTO postEditDTO) {
+
+        if(postEditDTO.getTagIdList().size()<1){
+            throw new RuntimeException("tagIdList.size should >=1");
+        }
+        postMapper.deletePostTagByPostId(postEditDTO.getId());
+        postMapper.updatePost(postEditDTO);
+        postMapper.insertPostTag(postEditDTO.getId(), postEditDTO.getTagIdList());
+
+    }
+
+    @Override
+    public void createPost(PostCreateDTO postCreateDTO) {
+        if(postCreateDTO.getTagIdList().size()<1){
+            throw new RuntimeException("tagIdList.size should >=1");
+        }
+        postMapper.insertPost(postCreateDTO);
+        Integer postId = postMapper.selectPostIdByTitle(postCreateDTO.getTitle());
+        postMapper.insertPostTag(postId,postCreateDTO.getTagIdList());
+
+    }
+
+    @Override
+    public void removePost(Integer postId) {
+        postMapper.deletePostById(postId);
+        postMapper.deletePostTagByPostId(postId);
+    }
+
+    @Override
+    public Integer insertTag(String tagName) {
+        return postMapper.insertTag(tagName);
+    }
+
+    @Override
+    public Integer deleteTagById(Integer tagId) {
+
+        Integer count = postMapper.countTagPost(tagId);
+        if(count>0){
+            throw new RuntimeException("this tag has posts,pls delete posts first");
+        }
+
+        return postMapper.deleteTag(tagId);
+    }
+
+    @Override
+    public Integer editTag(Integer tagId, String tagName) {
+        return postMapper.editTag(tagId,tagName);
     }
 
 

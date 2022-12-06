@@ -1,6 +1,8 @@
 package com.bty.blog.service;
 
 import com.bty.blog.entity.Record;
+import com.bty.blog.entity.dto.RecordCreateDTO;
+import com.bty.blog.entity.dto.RecordEditDTO;
 import com.bty.blog.entity.vo.CollectionVO;
 
 import java.util.List;
@@ -17,5 +19,11 @@ public interface RecordService {
     List<Record> selectRecordList();
 
     List<Record> selectRecordListByCollectionId(Integer collectionId);
+
+    void uploadRecord(RecordCreateDTO recordCreateDTO);
+
+    void editRecord(RecordEditDTO recordEditDTO);
+
+    void deleteRecord(String cid);
 
 }

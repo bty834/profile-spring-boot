@@ -1,6 +1,8 @@
 package com.bty.blog.dao;
 
 import com.bty.blog.entity.dto.CommentDTO;
+import com.bty.blog.entity.dto.PostCreateDTO;
+import com.bty.blog.entity.dto.PostEditDTO;
 import com.bty.blog.entity.vo.*;
 import org.apache.ibatis.annotations.Param;
 
@@ -31,8 +33,25 @@ public interface PostMapper {
     List<TagVO> selectTagList();
 
     List<CommentVO> selectCommentByPostId(Integer postId);
+    Integer insertComment(@Param("comment") CommentDTO comment);
 
+    Integer insertPost(@Param("post")PostCreateDTO post);
 
-    void insertComment(@Param("comment") CommentDTO comment);
+    Integer updatePost(@Param("post")PostEditDTO post);
 
+    Integer insertPostTag(@Param("postId")Integer postId,@Param("tagIdList")List<Integer> tagIdList);
+
+    void deletePostById(Integer postId);
+
+    void deletePostTagByPostId(Integer postId);
+
+    Integer selectPostIdByTitle(String title);
+
+    Integer insertTag(String tagName);
+
+    Integer countTagPost(Integer tagId);
+
+    Integer deleteTag(Integer tagId);
+
+    Integer editTag(@Param("tagId") Integer tagId, @Param("tagName") String tagName);
 }

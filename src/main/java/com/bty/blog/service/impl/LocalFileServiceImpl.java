@@ -25,6 +25,10 @@ import java.util.UUID;
 @Primary
 @RequiredArgsConstructor
 public class LocalFileServiceImpl implements FileService {
+
+    public static final String DOWNLOAD_DIR = "/download/";
+
+
     private static final Logger LOGGER = LoggerFactory.getLogger(LocalFileServiceImpl.class);
 
 
@@ -33,7 +37,7 @@ public class LocalFileServiceImpl implements FileService {
     @Override
     public String storeFile(MultipartFile multipartFile) {
         String localFilename = UUID.randomUUID() + multipartFile.getOriginalFilename();
-        String path = request.getServletContext().getRealPath("/") + localFilename;
+        String path = request.getServletContext().getRealPath(DOWNLOAD_DIR) + localFilename;
         LOGGER.info("file:{} have stored in path:{}",multipartFile.getOriginalFilename(),path);
         File file = new File(path);
         try {
@@ -42,6 +46,6 @@ public class LocalFileServiceImpl implements FileService {
             throw new RuntimeException(e);
         }
 
-        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() +"/"+ localFilename;
+        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() +DOWNLOAD_DIR+ localFilename;
     }
 }

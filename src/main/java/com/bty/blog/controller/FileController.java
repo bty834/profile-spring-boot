@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 
 /**
  * @author bty
@@ -47,7 +48,13 @@ public class FileController {
     @PostMapping("/file/postImage")
     public Response postImage(@RequestBody MultipartFile multipartFile) throws IOException {
 
+        String originalFilename = multipartFile.getOriginalFilename();
+        assert originalFilename != null;
+        Integer type = fileService.getFileType(originalFilename);
+        if(type!=0){
+            throw new RuntimeException("only image allowed!");
+        }
         String url = fileService.storeFile(multipartFile);
-        return Response.success(url);
+        return Response.success(Collections.singletonMap("url",url));
     }
 }

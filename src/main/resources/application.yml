@@ -27,12 +27,17 @@ ipfs:
 
 
 spring:
+
   servlet:
     multipart:
-      max-file-size: 100MB
+      # 单个文件大小
+      max-file-size:  10MB
+      # 设置总上传的文件大小
+      max-request-size:  50MB
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+
   banner:
     charset: UTF-8
     location: banner.text

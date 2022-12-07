@@ -1,11 +1,14 @@
 package com.bty.blog.controller;
 
+import com.bty.blog.BlogApplication;
 import com.bty.blog.domain.Response;
 import com.bty.blog.entity.vo.FileRecordVO;
 import com.bty.blog.service.FileService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.system.ApplicationHome;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,30 +29,25 @@ public class FileController {
 
     private final FileService fileService;
 
+
     @ApiOperation(value = "上传record")
     @PostMapping("/file/record")
     public Response recordFile(@RequestBody MultipartFile multipartFile) throws IOException {
-        File file = new File("");
-        multipartFile.transferTo(file);
-        Integer type = fileService.getFileType(file);
-        String coverUrl = null;
-        if(type==0 || type==1){
-            File thumbnailImage = fileService.thumbnailImage(file);
-            coverUrl = fileService.storeFile(thumbnailImage);
-        }
-        String url = fileService.storeFile(file);
+
+        String originalFilename = multipartFile.getOriginalFilename();
+        assert originalFilename != null;
+        Integer type = fileService.getFileType(originalFilename);
+        String coverUrl  = fileService.thumbnailImage(multipartFile,type);
+        String url = fileService.storeFile(multipartFile);
 
         return Response.success(new FileRecordVO(url,coverUrl,type));
-
     }
 
     @ApiOperation(value = "上传post中图片")
-    @PostMapping("/file/postimg")
+    @PostMapping("/file/postImage")
     public Response postImage(@RequestBody MultipartFile multipartFile) throws IOException {
-        File file = new File("");
-        multipartFile.transferTo(file);
 
-        String url = fileService.storeFile(file);
+        String url = fileService.storeFile(multipartFile);
         return Response.success(url);
     }
 }

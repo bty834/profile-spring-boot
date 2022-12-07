@@ -12,12 +12,12 @@ import java.io.File;
  * @date 2022/12/7
  * @since 1.8
  **/
-@Service("OSS")
+@Service
 @RequiredArgsConstructor
 public class OssFileServiceImpl implements FileService {
 
     @Override
-    public String storeFile(File file) {
+    public String storeFile(MultipartFile multipartFile) {
         return null;
     }
 }

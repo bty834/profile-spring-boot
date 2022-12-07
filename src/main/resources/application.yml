@@ -19,7 +19,17 @@ mybatis:
   mapper-locations: classpath:mappers/*xml
   config-location: classpath:mybatis-config.xml
 
+ipfs:
+  filebase:
+    endpoint: https://api.filebase.io/v1/ipfs
+    token: RTI5OTZDMjFDOEI0MkYzMDRBNzA6ZzA3a0RqQTBUVFJZb083NGtSd0Y1cjlJcktndVhIUFdlZFNoVEhMVTpidHktYmxvZw==
+
+
+
 spring:
+  servlet:
+    multipart:
+      max-file-size: 100MB
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher

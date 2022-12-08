@@ -26,4 +26,9 @@ public interface RecordService {
 
     void deleteRecord(Integer id);
 
+    Integer insertCollection(String name);
+
+    Integer updateCollection(Integer id,String name);
+
+    Integer removeCollection(Integer id);
 }

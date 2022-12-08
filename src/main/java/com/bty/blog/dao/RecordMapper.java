@@ -31,6 +31,13 @@ public interface RecordMapper {
 
     Integer deleteRecordCollectionByRecordId(Integer id);
 
-
     Integer selectRecordIdByTitle(String title);
+
+    Integer insertCollection(String name);
+
+    Integer updateCollectionName(Integer id,String name);
+
+    Integer deleteCollection(Integer id);
+
+    Integer selectCountRecordCollection(Integer id);
 }

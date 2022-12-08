@@ -39,7 +39,8 @@ public class tokenServiceImpl implements TokenService {
     @Override
     public Object verifyToken(String jwt) {
         String uuid = jwtUtil.decodeUUID(jwt);
-        User user  = (User)redisTemplate.opsForValue().getAndExpire(getTokenRedisKey(uuid), expireMinutes, TimeUnit.MINUTES);
+        User user  = (User)redisTemplate.opsForValue().get(getTokenRedisKey(uuid));
+        redisTemplate.expire(getTokenRedisKey(uuid) ,expireMinutes, TimeUnit.MINUTES);
         if(user==null){
             throw new RuntimeException("user not login");
         }

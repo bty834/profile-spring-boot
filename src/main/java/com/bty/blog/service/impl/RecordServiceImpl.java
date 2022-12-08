@@ -65,4 +65,23 @@ public class RecordServiceImpl implements RecordService {
         recordMapper.deleteRecordById(id);
         recordMapper.deleteRecordCollectionByRecordId(id);
     }
+
+    @Override
+    public Integer insertCollection(String name) {
+        return recordMapper.insertCollection(name);
+    }
+
+    @Override
+    public Integer updateCollection(Integer id, String name) {
+        return recordMapper.updateCollectionName(id,name);
+    }
+
+    @Override
+    public Integer removeCollection(Integer id) {
+        Integer count =recordMapper.selectCountRecordCollection(id);
+        if(count>0){
+            throw new RuntimeException("this collection has records");
+        }
+        return recordMapper.deleteCollection(id);
+    }
 }

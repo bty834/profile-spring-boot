@@ -65,4 +65,27 @@ public class RecordController {
         return Response.success();
     }
 
+    @Admin
+    @ApiOperation(value = "新增collection")
+    @PostMapping("/collection")
+    public Response createCollection( String name){
+        recordService.insertCollection(name);
+        return Response.success();
+    }
+    @Admin
+    @ApiOperation(value = "修改collection")
+    @PutMapping("/collection")
+    public Response updateCollection( Integer id, String name){
+        recordService.updateCollection(id,name);
+        return Response.success();
+    }
+
+    @Admin
+    @ApiOperation(value = "删除collection")
+    @DeleteMapping("/collection")
+    public Response cancelCollection(Integer id){
+        recordService.removeCollection(id);
+        return Response.success();
+    }
+
 }

@@ -54,7 +54,7 @@ pagehelper:
 password:
   secret: fde2.
 token:
-  expire-minutes: 30
+  expire-minutes: 60
   secret: dfjsfer2334re2342fdsx.
 knife4j:
   enable: true

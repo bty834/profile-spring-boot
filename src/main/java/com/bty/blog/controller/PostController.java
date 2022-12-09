@@ -39,7 +39,7 @@ public class PostController {
     @Admin
     @ApiOperation(value = "新增post")
     @PostMapping("/post")
-    public Response createPost(PostCreateDTO postCreateDTO){
+    public Response createPost(@RequestBody PostCreateDTO postCreateDTO){
         postService.createPost(postCreateDTO);
         return Response.success();
     }
@@ -47,14 +47,14 @@ public class PostController {
     @Admin
     @ApiOperation(value = "修改post")
     @PutMapping("/post")
-    public Response editPost(PostEditDTO postEditDTO){
+    public Response editPost(@RequestBody PostEditDTO postEditDTO){
         postService.editPost(postEditDTO);
         return Response.success();
     }
 
     @Admin
     @ApiOperation(value = "删除post")
-    @DeleteMapping("/post/{id}")
+    @DeleteMapping("/post/{postId}")
     public Response removePost(@PathVariable Integer postId){
         postService.removePost(postId);
         return Response.success();
@@ -122,10 +122,11 @@ public class PostController {
         return Response.success(postService.insertTag(tagName));
     }
 
+
     @Admin
     @ApiOperation(value = "修改tag")
     @PutMapping("/tag")
-    public Response editTag(@RequestBody Integer tagId,String tagName){
+    public Response editTag( Integer tagId,String tagName){
         return Response.success(postService.editTag(tagId,tagName));
     }
 

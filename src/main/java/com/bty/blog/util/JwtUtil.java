@@ -28,7 +28,7 @@ public class JwtUtil {
 
     public String encodeUUID(String uuid)  {
         return JWT.create()
-                .withExpiresAt(new Date(System.currentTimeMillis() + (long) expireMinutes * 60 * 1000))
+//                .withExpiresAt(new Date(System.currentTimeMillis() + (long) expireMinutes * 60 * 1000))
                 .withSubject(uuid)
                 .sign(Algorithm.HMAC256(secret));
     }

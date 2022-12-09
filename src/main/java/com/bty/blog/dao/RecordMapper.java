@@ -35,7 +35,7 @@ public interface RecordMapper {
 
     Integer insertCollection(String name);
 
-    Integer updateCollectionName(Integer id,String name);
+    Integer updateCollectionName(@Param("id") Integer id,@Param("name") String name);
 
     Integer deleteCollection(Integer id);
 

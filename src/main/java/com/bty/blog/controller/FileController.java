@@ -1,6 +1,7 @@
 package com.bty.blog.controller;
 
 import com.bty.blog.BlogApplication;
+import com.bty.blog.annotation.Throttle;
 import com.bty.blog.domain.Response;
 import com.bty.blog.entity.vo.FileRecordVO;
 import com.bty.blog.service.FileService;
@@ -30,15 +31,14 @@ public class FileController {
 
     private final FileService fileService;
 
-
     @ApiOperation(value = "上传record")
     @PostMapping("/file/record")
-    public Response recordFile(@RequestBody MultipartFile multipartFile) throws IOException {
+    public Response recordFile(@RequestBody MultipartFile multipartFile) {
 
         String originalFilename = multipartFile.getOriginalFilename();
         assert originalFilename != null;
         Integer type = fileService.getFileType(originalFilename);
-        String coverUrl  = fileService.thumbnailImage(multipartFile,type);
+        String coverUrl  = fileService.getCoverImage(multipartFile,type);
         String url = fileService.storeFile(multipartFile);
 
         return Response.success(new FileRecordVO(url,coverUrl,type));
@@ -46,7 +46,7 @@ public class FileController {
 
     @ApiOperation(value = "上传post中图片")
     @PostMapping("/file/postImage")
-    public Response postImage(@RequestBody MultipartFile multipartFile) throws IOException {
+    public Response postImage(@RequestBody MultipartFile multipartFile) {
 
         String originalFilename = multipartFile.getOriginalFilename();
         assert originalFilename != null;

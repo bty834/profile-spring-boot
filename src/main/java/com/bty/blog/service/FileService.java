@@ -13,7 +13,7 @@ import java.util.Set;
  * @since 1.8
  **/
 public interface FileService {
-    //0图片,1视频,2音频,3PDF,4WORD,5EXCEL,6PPT,7其他
+
     Set<String> IMAGE = new HashSet<String>(){{
         addAll(Arrays.asList("jpg","png","jpeg","gif"));
     }};
@@ -35,10 +35,10 @@ public interface FileService {
     Set<String> PPT = new HashSet<String>(){{
         addAll(Arrays.asList("ppt","pptx"));
     }};
+    Set<String> MD = new HashSet<String>(){{
+        addAll(Arrays.asList("md"));
+    }};
 
-    default String thumbnailImage(MultipartFile multipartFile,Integer type) {
-        return "";
-    }
 
     default Integer getFileType(String filename) {
         int seperatorIdx = filename.lastIndexOf('.');
@@ -64,12 +64,23 @@ public interface FileService {
         if(PPT.contains(postfix)){
             return 6;
         }
-        return 7;
+        if(MD.contains(postfix)){
+            return 7;
+        }
+        return 8;
     }
 
     /**
-     * @param file
-     * @return url
+     * get the cover image of file , if the file type is image , then take de-sampled origin image as cover
+     * @param multipartFile uploaded file
+     * @param type //0 image,1 video,2 audio,3 PDF,4 WORD,5 EXCEL,6 SLIDE,7 MD,8 OTHER
+     * @return cover img url
+     */
+    String getCoverImage(MultipartFile multipartFile,Integer type);
+
+    /**
+     * @param multipartFile uploaded file
+     * @return file url
      */
     String storeFile(MultipartFile multipartFile);
 

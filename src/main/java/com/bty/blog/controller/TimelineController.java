@@ -2,6 +2,7 @@ package com.bty.blog.controller;
 
 import com.bty.blog.BlogApplication;
 import com.bty.blog.annotation.Admin;
+import com.bty.blog.annotation.Throttle;
 import com.bty.blog.domain.Response;
 import com.bty.blog.entity.Timeline;
 import com.bty.blog.service.TimelineService;

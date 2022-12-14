@@ -28,7 +28,7 @@ public interface PostMapper {
 
     List<PostVO> selectRecentPostList(Integer limit);
 
-    List<PostCard> selectPostCardListByTagId(Integer tagId);
+    List<PostCard> selectPostCardListByTagId(@Param("tagId") Integer tagId);
 
     List<TagVO> selectTagList();
 

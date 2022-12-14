@@ -1,6 +1,5 @@
-package com.bty.blog.entity.dto;
+package com.bty.blog.entity;
 
-import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,18 +7,14 @@ import lombok.ToString;
 
 /**
  * @author bty
- * @date 2022/12/2
+ * @date 2022/12/15
  * @since 1.8
  **/
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@ApiModel("LOGIN BODY")
-public class LoginDTO {
-
+public class Test {
     private String username;
     private String password;
-    private String uuid;
-    private String captcha;
 }

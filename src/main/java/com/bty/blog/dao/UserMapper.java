@@ -2,6 +2,8 @@ package com.bty.blog.dao;
 
 import com.bty.blog.entity.User;
 
+import java.util.List;
+
 /**
  * @author bty
  * @date 2022/12/2
@@ -10,4 +12,6 @@ import com.bty.blog.entity.User;
 public interface UserMapper {
 
     User selectUserByUsername(String username);
+
+    List<String> selectAllUsername();
 }

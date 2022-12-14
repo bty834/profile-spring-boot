@@ -31,9 +31,9 @@ spring:
   servlet:
     multipart:
       # 单个文件大小
-      max-file-size:  10MB
+      max-file-size:  40MB
       # 设置总上传的文件大小
-      max-request-size:  50MB
+      max-request-size:  100MB
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -51,11 +51,16 @@ pagehelper:
   helperDialect: mysql
   supportMethodsArguments: true
   params: count=countSql
+
 password:
   secret: fde2.
+
+
 token:
   expire-minutes: 60
   secret: dfjsfer2334re2342fdsx.
+
+
 knife4j:
   enable: true
   production: false
@@ -63,4 +68,14 @@ knife4j:
     enable: true
     username: btyblog
     password: btyblog123.
+
+captcha:
+  enabled: true
+  border: false
+  width: 130
+  height: 48
+  font-size: 30
+  char-length: 4
+  font: 微软雅黑
+  expireSeconds: 60
 

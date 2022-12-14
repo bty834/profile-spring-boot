@@ -1,16 +1,23 @@
 package com.bty.blog.controller;
 
 import com.bty.blog.annotation.Admin;
+import com.bty.blog.annotation.RateLimit;
+import com.bty.blog.annotation.Throttle;
+import com.bty.blog.domain.PageResponse;
 import com.bty.blog.domain.Response;
 import com.bty.blog.entity.dto.CommentDTO;
 import com.bty.blog.entity.dto.PostCreateDTO;
 import com.bty.blog.entity.dto.PostEditDTO;
+import com.bty.blog.entity.vo.PostCard;
 import com.bty.blog.service.PostService;
+import com.bty.blog.util.PageUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author bty
@@ -20,14 +27,28 @@ import org.springframework.web.bind.annotation.*;
 @Api(value = "博客api")
 @RestController
 @RequiredArgsConstructor
-public class PostController {
+public  class PostController extends BaseController{
 
     private final PostService postService;
 
-    @ApiOperation(value = "查询post列表")
+
+    @ApiOperation(value = "分页查询post列表")
     @GetMapping("/postList")
-    public Response getPostCardList(){
-        return Response.success(postService.selectPostCardList());
+    public PageResponse getPostCardList(){
+        helpPage();
+        PageResponse pageResponse = pageResponse(postService.selectPostCardList());
+        clearPage();
+        return pageResponse;
+    }
+
+
+    @ApiOperation(value = "分页查询该tag下所有的post")
+    @GetMapping("/tagPostList")
+    public PageResponse getPostCardListByTagId(Integer tagId){
+        helpPage();
+        PageResponse pageResponse = pageResponse(postService.selectPostCardListByTagId(tagId));
+        clearPage();
+        return pageResponse;
     }
 
     @ApiOperation(value = "根据postId查询post详情")
@@ -76,6 +97,8 @@ public class PostController {
     public Response getTagList(){
         return Response.success(postService.selectTagList());
     }
+
+
     @ApiOperation(value = "查询该postId所有的tag")
     @GetMapping("/tag/{postId}")
     public Response getTagListByPostId(@PathVariable("postId") Integer postId){
@@ -88,18 +111,18 @@ public class PostController {
         return Response.success(postService.selectRecentPostList(limit));
     }
 
-    @ApiOperation(value = "查询该tag下所有的post")
-    @GetMapping("/tagPostList/{tagId}")
-    public Response getPostCardListByTagId(@PathVariable("tagId") Integer tagId){
-        return Response.success(postService.selectPostCardListByTagId(tagId));
-    }
+
 
     @ApiOperation(value = "查询该post所有的comment")
     @GetMapping("/comment/{postId}")
-    public Response getCommentListByPostId(@PathVariable("postId") Integer postId){
-        return Response.success(postService.selectCommentListByPostId(postId));
+    public PageResponse getCommentListByPostId(@PathVariable("postId") Integer postId){
+        helpPage();
+        PageResponse pageResponse = pageResponse(postService.selectCommentListByPostId(postId));
+        clearPage();
+        return pageResponse;
     }
 
+    @RateLimit
     @ApiOperation(value = "添加评论")
     @PostMapping("/comment")
     public Response submitComment(@RequestBody CommentDTO comment){

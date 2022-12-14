@@ -57,7 +57,6 @@
     <select id="selectPostCardList" resultType="com.bty.blog.entity.vo.PostCard">
         select id, title, excerpt, created, cover_url
         from post
-        order by created desc
     </select>
 
     <select id="selectPostDetailById" resultType="com.bty.blog.entity.vo.PostDetail">
@@ -78,7 +77,6 @@
         from post p
         where id in
               (select distinct pt.post_id from post_tag pt where pt.tag_id = #{tagId})
-        order by p.created desc
     </select>
 
     <select id="selectRecentPostList" resultType="com.bty.blog.entity.vo.PostVO">
@@ -96,7 +94,6 @@
         select id, name, content, created
         from comment
         where post_id = #{postId}
-        order by created desc
     </select>
 
     <select id="selectPostIdList" resultType="java.lang.Integer">

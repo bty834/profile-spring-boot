@@ -3,8 +3,10 @@ package com.bty.blog.service.impl;
 import com.bty.blog.dao.UserMapper;
 import com.bty.blog.entity.User;
 import com.bty.blog.entity.dto.LoginDTO;
+import com.bty.blog.service.CaptchaService;
 import com.bty.blog.service.LoginService;
 import com.bty.blog.service.TokenService;
+import com.google.common.cache.Cache;
 import com.sun.org.apache.xml.internal.security.algorithms.implementations.SignatureDSA;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +15,7 @@ import sun.security.rsa.RSASignature;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.Objects;
 
 import static com.bty.blog.util.CodecUtil.encryptBySHA256;
 
@@ -25,6 +28,7 @@ import static com.bty.blog.util.CodecUtil.encryptBySHA256;
 @RequiredArgsConstructor
 public class LoginServiceImpl implements LoginService {
 
+
     @Value("${password.secret}")
     private String salt;
 
@@ -33,20 +37,28 @@ public class LoginServiceImpl implements LoginService {
 
     private final TokenService tokenService;
 
+    private final CaptchaService captchaService;
+
     @Override
     public String startLogin(LoginDTO loginDTO) {
+        // verifyCaptcha
+        captchaService.verifyCaptcha(loginDTO.getUuid(), loginDTO.getCaptcha());
 
+        // verify username password
         User user = userMapper.selectUserByUsername(loginDTO.getUsername());
-        if(user==null){
+        if (user == null) {
             throw new RuntimeException("user not exists");
         }
 
+
         String decodedPassword = new String(Base64.getDecoder().decode(loginDTO.getPassword()), StandardCharsets.UTF_8);
 
-        if(!user.getPassword().equals(encryptBySHA256(decodedPassword,salt))){
+        if (!user.getPassword().equals(encryptBySHA256(decodedPassword, salt))) {
             throw new RuntimeException("password not right");
         }
-
+        // generate jwt
         return tokenService.initToken(user);
     }
+
+
 }

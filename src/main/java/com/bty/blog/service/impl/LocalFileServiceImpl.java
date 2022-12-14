@@ -28,11 +28,15 @@ public class LocalFileServiceImpl implements FileService {
 
     public static final String DOWNLOAD_DIR = "/download/";
 
-
     private static final Logger LOGGER = LoggerFactory.getLogger(LocalFileServiceImpl.class);
 
 
     private final HttpServletRequest request;
+
+    @Override
+    public String getCoverImage(MultipartFile multipartFile, Integer type) {
+        return "null";
+    }
 
     @Override
     public String storeFile(MultipartFile multipartFile) {

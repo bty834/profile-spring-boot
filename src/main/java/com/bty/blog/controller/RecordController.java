@@ -1,10 +1,12 @@
 package com.bty.blog.controller;
 
 import com.bty.blog.annotation.Admin;
+import com.bty.blog.domain.PageResponse;
 import com.bty.blog.domain.Response;
 import com.bty.blog.entity.dto.RecordCreateDTO;
 import com.bty.blog.entity.dto.RecordEditDTO;
 import com.bty.blog.service.RecordService;
+import com.bty.blog.util.PageUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(value = "记录")
 @RestController
 @RequiredArgsConstructor
-public class RecordController {
+public class RecordController extends BaseController{
 
     private final RecordService recordService;
 
@@ -30,14 +32,20 @@ public class RecordController {
 
     @ApiOperation(value = "查询Record,返回cid")
     @GetMapping("/recordList")
-    public Response getRecordList(){
-        return Response.success(recordService.selectRecordList());
+    public PageResponse getRecordList(){
+        helpPage();
+        PageResponse pageResponse = pageResponse(recordService.selectRecordList());
+        clearPage();
+        return pageResponse;
     }
 
     @ApiOperation(value = "根据collectionId查询Record,返回cid")
     @GetMapping("/recordList/collection/{collectionId}")
-    public Response getRecordListByCollectionId(@PathVariable("collectionId")Integer collectionId){
-        return Response.success(recordService.selectRecordListByCollectionId(collectionId));
+    public PageResponse getRecordListByCollectionId(@PathVariable("collectionId")Integer collectionId){
+        helpPage();
+        PageResponse pageResponse = pageResponse(recordService.selectRecordListByCollectionId(collectionId));
+        clearPage();
+        return pageResponse;
     }
 
     @Admin

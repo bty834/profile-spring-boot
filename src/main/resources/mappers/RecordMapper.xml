@@ -51,7 +51,6 @@
     <select id="selectRecordList" resultType="com.bty.blog.entity.Record">
         select id,url, cover_url, type, title, description, created
         from record
-        order by created desc
     </select>
 
     <select id="selectRecordListByCollectionId" resultType="com.bty.blog.entity.Record">
@@ -59,7 +58,6 @@
         from record_collection rc
                  left join record r on r.id = rc.record_id
         where rc.collection_id = #{collectionId}
-        order by r.created desc
     </select>
     <select id="selectRecordIdByTitle" resultType="java.lang.Integer">
         select id from record where title=#{title} limit 1

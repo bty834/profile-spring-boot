@@ -1,8 +1,12 @@
 package com.bty.blog.controller;
 
+import com.bty.blog.annotation.RateLimit;
+import com.bty.blog.annotation.Throttle;
 import com.bty.blog.domain.Response;
 import com.bty.blog.entity.dto.LoginDTO;
+import com.bty.blog.service.CaptchaService;
 import com.bty.blog.service.LoginService;
+import com.google.common.base.Strings;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -29,9 +33,21 @@ public class LoginController {
 
     private final LoginService loginService;
 
+
+    @RateLimit
+    @Throttle(interval = 500)
     @ApiOperation(value = "登录")
     @PostMapping("/login")
     public Response login(@RequestBody LoginDTO loginDTO){
+        if(Strings.isNullOrEmpty(loginDTO.getUsername()) ||
+        Strings.isNullOrEmpty(loginDTO.getPassword())){
+            throw new RuntimeException("用户无效");
+        }
+        if(Strings.isNullOrEmpty(loginDTO.getUuid()) ||
+        Strings.isNullOrEmpty(loginDTO.getCaptcha())){
+            throw new RuntimeException("验证码无效");
+        }
+
         String token = loginService.startLogin(loginDTO);
         Map<String, String> map = Collections.singletonMap(TOKEN, token);
         return Response.success(map);

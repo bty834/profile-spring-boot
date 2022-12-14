@@ -2,6 +2,8 @@ package com.bty.blog.domain;
 
 import lombok.*;
 
+import java.io.Serializable;
+
 /**
  * @author bty
  * @date 2022/11/28
@@ -11,7 +13,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Response<T> {
+public class Response<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

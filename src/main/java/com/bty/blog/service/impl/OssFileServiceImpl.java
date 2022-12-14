@@ -17,6 +17,11 @@ import java.io.File;
 public class OssFileServiceImpl implements FileService {
 
     @Override
+    public String getCoverImage(MultipartFile multipartFile, Integer type) {
+        return "null";
+    }
+
+    @Override
     public String storeFile(MultipartFile multipartFile) {
         return null;
     }

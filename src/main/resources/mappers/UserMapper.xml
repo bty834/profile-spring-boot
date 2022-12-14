@@ -8,4 +8,7 @@
     <select id="selectUserByUsername" resultType="com.bty.blog.entity.User">
         select username,password from user where username=#{username}
     </select>
+    <select id="selectAllUsername" resultType="java.lang.String">
+        select username from user
+    </select>
 </mapper>

@@ -27,7 +27,7 @@ public class tokenServiceImpl implements TokenService {
     private final JwtUtil jwtUtil;
     private final RedisTemplate redisTemplate;
     private String getTokenRedisKey(String uuid) {
-        return "LOGIN" + ":" + uuid;
+        return "LOGIN:" + uuid;
     }
     @Override
     public String initToken(Object user) {

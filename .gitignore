@@ -1,4 +1,7 @@
 HELP.md
+!src/main/resources/application-prod.yml
+!src/main/resources/application-dev.yml
+!src/main/resources/btyhub.site.jks
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**

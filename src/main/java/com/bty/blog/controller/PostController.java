@@ -11,6 +11,7 @@ import com.bty.blog.entity.dto.PostEditDTO;
 import com.bty.blog.entity.vo.PostCard;
 import com.bty.blog.service.PostService;
 import com.bty.blog.util.PageUtil;
+import com.google.common.base.Strings;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -81,10 +82,6 @@ public  class PostController extends BaseController{
         return Response.success();
     }
 
-
-
-
-
     @ApiOperation(value = "查询所有postId")
     @GetMapping("/postIdList")
     public Response getPostIdList(){
@@ -113,22 +110,22 @@ public  class PostController extends BaseController{
 
 
 
-    @ApiOperation(value = "查询该post所有的comment")
-    @GetMapping("/comment/{postId}")
-    public PageResponse getCommentListByPostId(@PathVariable("postId") Integer postId){
-        helpPage();
-        PageResponse pageResponse = pageResponse(postService.selectCommentListByPostId(postId));
-        clearPage();
-        return pageResponse;
-    }
+//    @ApiOperation(value = "查询该post所有的comment")
+//    @GetMapping("/comment/{postId}")
+//    public PageResponse getCommentListByPostId(@PathVariable("postId") Integer postId){
+//        helpPage();
+//        PageResponse pageResponse = pageResponse(postService.selectCommentListByPostId(postId));
+//        clearPage();
+//        return pageResponse;
+//    }
 
-    @RateLimit
-    @ApiOperation(value = "添加评论")
-    @PostMapping("/comment")
-    public Response submitComment(@RequestBody CommentDTO comment){
-        postService.insertComment(comment);
-        return Response.success("插入成功");
-    }
+//    @RateLimit
+//    @ApiOperation(value = "添加评论")
+//    @PostMapping("/comment")
+//    public Response submitComment(@RequestBody CommentDTO comment){
+//        postService.insertComment(comment);
+//        return Response.success("插入成功");
+//    }
 
 
 
@@ -160,6 +157,11 @@ public  class PostController extends BaseController{
         return Response.success(postService.deleteTagById(tagId));
     }
 
+    @GetMapping("/search/post")
+    @ApiOperation(value = "搜索博文")
+    public Response searchPost(String searchTerm){
 
+        return Response.success(postService.searchPost(searchTerm));
+    }
 
 }

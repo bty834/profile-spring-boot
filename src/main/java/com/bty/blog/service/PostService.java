@@ -41,6 +41,7 @@ public interface PostService {
 
     void removePost(Integer postId);
 
+    List<PostCard> searchPost(String term);
 
     Integer insertTag(String tagName);
 

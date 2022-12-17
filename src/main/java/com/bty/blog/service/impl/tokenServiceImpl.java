@@ -4,6 +4,8 @@ import com.bty.blog.entity.User;
 import com.bty.blog.service.TokenService;
 import com.bty.blog.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class tokenServiceImpl implements TokenService {
 
+    public static final Logger LOGGER = LoggerFactory.getLogger(tokenServiceImpl.class);
 
     @Value("${token.expire-minutes}")
     private Integer expireMinutes;
@@ -42,6 +45,7 @@ public class tokenServiceImpl implements TokenService {
         User user  = (User)redisTemplate.opsForValue().get(getTokenRedisKey(uuid));
         redisTemplate.expire(getTokenRedisKey(uuid) ,expireMinutes, TimeUnit.MINUTES);
         if(user==null){
+            LOGGER.error("user not login");
             throw new RuntimeException("user not login");
         }
         return user;

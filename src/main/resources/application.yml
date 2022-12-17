@@ -1,9 +1,14 @@
 server:
-
-  port: 8080
+  port: 8888
+  # ssl证书和key
+  ssl:
+    key-store: classpath:btyhub.site.jks
+    key-store-password: 414w211cuu
+    key-store-type: JKS
   servlet:
     # 应用的访问路径
     context-path: /
+
   tomcat:
     # tomcat的URI编码
     uri-encoding: UTF-8
@@ -19,10 +24,10 @@ mybatis:
   mapper-locations: classpath:mappers/*xml
   config-location: classpath:mybatis-config.xml
 
-ipfs:
-  filebase:
-    endpoint: https://api.filebase.io/v1/ipfs
-    token: RTI5OTZDMjFDOEI0MkYzMDRBNzA6ZzA3a0RqQTBUVFJZb083NGtSd0Y1cjlJcktndVhIUFdlZFNoVEhMVTpidHktYmxvZw==
+#ipfs:
+#  filebase:
+#    endpoint: https://api.filebase.io/v1/ipfs
+#    token: RTI5OTZDMjFDOEI0MkYzMDRBNzA6ZzA3a0RqQTBUVFJZb083NGtSd0Y1cjlJcktndVhIUFdlZFNoVEhMVTpidHktYmxvZw==
 
 
 
@@ -34,17 +39,28 @@ spring:
       max-file-size:  40MB
       # 设置总上传的文件大小
       max-request-size:  100MB
+      # 文件上传路径
+      location: /usr/local/spring-boot-blog/static/download
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
-
   banner:
     charset: UTF-8
     location: banner.text
   application:
     name: bty-blog
+
+
   profiles:
     active: dev
+
+# 日期格式
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+  web:
+    resources:
+      # 静态资源访问路径
+      static-locations: /usr/local/spring-boot-blog/static
 
 # PageHelper分页插件
 pagehelper:
@@ -66,8 +82,8 @@ knife4j:
   production: false
   basic:
     enable: true
-    username: btyblog
-    password: btyblog123.
+    username: username
+    password: password
 
 captcha:
   enabled: true

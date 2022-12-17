@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <!-- 日志存放路径 -->
-    <property name="log.path" value="/usr/logs" />
+    <property name="log.path" value="/var/log/java" />
     <!-- 日志输出格式 -->
     <property name="log.pattern" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{20} - [%method,%line] - %msg%n" />
     <property name="log.max.size" value="500MB"/>
@@ -10,7 +10,6 @@
         <encoder>
             <pattern>${log.pattern}</pattern>
         </encoder>
-
     </appender>
 
     <appender name="file_info" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -20,7 +19,7 @@
             <!-- 日志文件名格式 -->
             <fileNamePattern>${log.path}/info.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <!-- 日志最大的历史 60天 -->
-            <maxHistory>14</maxHistory>
+            <maxHistory>7</maxHistory>
             <!-- 当天的日志大小 超过${log.max.size}时,压缩日志并保存 -->
             <maxFileSize>${log.max.size}</maxFileSize>
         </rollingPolicy>
@@ -50,7 +49,7 @@
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <fileNamePattern>${log.path}/error.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <!--日志最大存储天数-->
-            <maxHistory>60</maxHistory>
+            <maxHistory>7</maxHistory>
             <!-- 当天的日志大小 超过${log.max.size}时,压缩日志并保存 -->
             <maxFileSize>${log.max.size}</maxFileSize>
         </rollingPolicy>

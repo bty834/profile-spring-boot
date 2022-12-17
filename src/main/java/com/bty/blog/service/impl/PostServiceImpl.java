@@ -8,9 +8,14 @@ import com.bty.blog.entity.vo.*;
 import com.bty.blog.service.PostService;
 import com.bty.blog.util.PageUtil;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -22,7 +27,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
 
-
+    public static final Logger LOGGER = LoggerFactory.getLogger(PostServiceImpl.class);
 
     private final PostMapper postMapper;
 
@@ -86,14 +91,17 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void insertComment(CommentDTO comment) {
+        LOGGER.info("submit comment:{}",comment);
         postMapper.insertComment(comment);
     }
 
     @Override
     public Integer insertPostTagList(Integer postId, List<Integer> tagIdList) {
         if(tagIdList.size()<1){
+            LOGGER.error("tagIdList.size <1 for postId:{}",postId);
             throw new RuntimeException("tagIdList.size should >=1");
         }
+        LOGGER.info("insert tagId {} for postId:{}",tagIdList,postId);
         return postMapper.insertPostTag(postId, tagIdList);
 
     }
@@ -102,8 +110,10 @@ public class PostServiceImpl implements PostService {
     public void editPost(PostEditDTO postEditDTO) {
 
         if(postEditDTO.getTagIdList().size()<1){
+            LOGGER.error("tagIdList.size <1 for postId:{}",postEditDTO.getId());
             throw new RuntimeException("tagIdList.size should >=1");
         }
+        LOGGER.info("edit postId:{}",postEditDTO.getId());
         postMapper.deletePostTagByPostId(postEditDTO.getId());
         postMapper.updatePost(postEditDTO);
         postMapper.insertPostTag(postEditDTO.getId(), postEditDTO.getTagIdList());
@@ -113,8 +123,10 @@ public class PostServiceImpl implements PostService {
     @Override
     public void createPost(PostCreateDTO postCreateDTO) {
         if(postCreateDTO.getTagIdList().size()<1){
+            LOGGER.error("tagIdList.size <1 ");
             throw new RuntimeException("tagIdList.size should >=1");
         }
+        LOGGER.info("create post for title:{}",postCreateDTO.getTitle());
         postMapper.insertPost(postCreateDTO);
         Integer postId = postMapper.selectPostIdByTitle(postCreateDTO.getTitle());
         postMapper.insertPostTag(postId,postCreateDTO.getTagIdList());
@@ -122,21 +134,30 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public List<PostCard> searchPost(String term) {
+        return postMapper.search(term);
+    }
+
+    @Override
     public void removePost(Integer postId) {
+        LOGGER.warn("remove postId:{}",postId);
         postMapper.deletePostById(postId);
         postMapper.deletePostTagByPostId(postId);
     }
 
     @Override
     public Integer insertTag(String tagName) {
+        LOGGER.info("insert tag:{}",tagName);
         return postMapper.insertTag(tagName);
     }
 
     @Override
     public Integer deleteTagById(Integer tagId) {
+        LOGGER.warn("delete tagId:{}",tagId);
 
         Integer count = postMapper.countTagPost(tagId);
         if(count>0){
+            LOGGER.error("this tag has posts,pls delete posts first");
             throw new RuntimeException("this tag has posts,pls delete posts first");
         }
 
@@ -145,6 +166,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Integer editTag(Integer tagId, String tagName) {
+        LOGGER.info("change tagId:{} to new tagName:{}",tagId,tagName);
         return postMapper.editTag(tagId,tagName);
     }
 

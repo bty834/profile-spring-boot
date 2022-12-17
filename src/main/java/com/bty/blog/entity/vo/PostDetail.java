@@ -22,6 +22,8 @@ import java.util.Date;
 public class PostDetail {
     private Integer id;
     private String title;
+    private String coverUrl;
+    private String excerpt;
     private String content;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date created;

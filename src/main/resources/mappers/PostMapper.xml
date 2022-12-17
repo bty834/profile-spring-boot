@@ -60,7 +60,7 @@
     </select>
 
     <select id="selectPostDetailById" resultType="com.bty.blog.entity.vo.PostDetail">
-        select id, title, content, created
+        select id, title,cover_url,excerpt, content, created
         from post
         where id = #{id} limit 1
     </select>
@@ -86,14 +86,17 @@
     </select>
 
     <select id="selectTagList" resultType="com.bty.blog.entity.vo.TagVO">
-        select id, name
-        from tag;
+        select t.id id, t.name name, count(pt.id) amount
+        from tag t
+            left join post_tag pt
+                on t.id=pt.tag_id
+                group by t.id, t.name
     </select>
 
     <select id="selectCommentByPostId" resultType="com.bty.blog.entity.vo.CommentVO">
         select id, name, content, created
         from comment
-        where post_id = #{postId}
+        where post_id = #{postId} limit 1
     </select>
 
     <select id="selectPostIdList" resultType="java.lang.Integer">
@@ -108,13 +111,20 @@
     <select id="selectPostIdByTitle" resultType="java.lang.Integer">
         select id
         from post
-        where title = #{title}
+        where title = #{title} limit 1
     </select>
 
     <select id="countTagPost" resultType="java.lang.Integer">
         select count(id)
         from post_tag
         where tag_id = #{tagId}
+    </select>
+
+    <select id="search" resultType="com.bty.blog.entity.vo.PostCard">
+        select id, title
+        from post
+        where title like concat('%',#{term},'%')
+        order by created asc limit 10
     </select>
 
 

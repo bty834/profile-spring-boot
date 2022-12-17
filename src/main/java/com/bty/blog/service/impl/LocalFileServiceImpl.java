@@ -1,12 +1,10 @@
 package com.bty.blog.service.impl;
 
-import com.bty.blog.BlogApplication;
-import com.bty.blog.exception.ExceptionHandler;
+
 import com.bty.blog.service.FileService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.system.ApplicationHome;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,8 +33,21 @@ public class LocalFileServiceImpl implements FileService {
 
     @Override
     public String getCoverImage(MultipartFile multipartFile, Integer type) {
-        return "null";
+        if(type==0){
+            return "";
+        }
+        if(type==1 || type ==2){
+            return getFileUrl(request,"video.jpg");
+        }
+
+
+        return getFileUrl(request,"file.jpg");
     }
+
+    public static String getFileUrl(HttpServletRequest request,String fileName){
+        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + DOWNLOAD_DIR + fileName;
+    }
+
 
     @Override
     public String storeFile(MultipartFile multipartFile) {
@@ -49,7 +60,7 @@ public class LocalFileServiceImpl implements FileService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() +DOWNLOAD_DIR+ localFilename;
+        return getFileUrl(request,localFilename);
+//        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() +DOWNLOAD_DIR+ localFilename;
     }
 }

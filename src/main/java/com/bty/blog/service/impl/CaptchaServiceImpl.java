@@ -8,6 +8,8 @@ import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.common.base.Strings;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +30,7 @@ import java.util.concurrent.TimeUnit;
 @Service
 @RequiredArgsConstructor
 public class CaptchaServiceImpl implements CaptchaService {
+    public static final Logger LOGGER = LoggerFactory.getLogger(CaptchaServiceImpl.class);
 
     private final KaptchaProperties kaptchaProperties;
     private final DefaultKaptcha defaultKaptcha;
@@ -71,10 +74,12 @@ public class CaptchaServiceImpl implements CaptchaService {
     public void verifyCaptcha(String uuid,String text) {
         String answer = (String)redisTemplate.opsForValue().get(getCaptchaRedisKey(uuid));
         if(answer==null ){
-            throw new RuntimeException("验证码已过期");
+            LOGGER.error("captcha expired");
+            throw new RuntimeException("captcha expired");
         }
         if(!answer.equals(text)){
-            throw new RuntimeException("验证码错误");
+            LOGGER.error("captcha not matched");
+            throw new RuntimeException("captcha not matched");
         }
     }
 }

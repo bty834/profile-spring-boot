@@ -15,8 +15,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@ApiModel(value = "tag id和名称")
+@ApiModel(value = "tag Id和名称及其post数量")
 public class TagVO {
     private Integer id;
     private String name;
+    private Integer amount;
 }

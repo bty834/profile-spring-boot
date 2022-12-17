@@ -54,4 +54,6 @@ public interface PostMapper {
     Integer deleteTag(Integer tagId);
 
     Integer editTag(@Param("tagId") Integer tagId, @Param("tagName") String tagName);
+
+    List<PostCard> search(String term);
 }

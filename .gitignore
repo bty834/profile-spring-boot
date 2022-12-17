@@ -7,9 +7,9 @@ target/
 !**/src/main/**
 !**/src/test/**
 
-!**/application-prod.yml
-!**/application-dev.yml
-!**/btyhub.site.jks
+**/application-prod.yml
+**/application-dev.yml
+**/btyhub.site.jks
 
 ### STS ###
 .apt_generated

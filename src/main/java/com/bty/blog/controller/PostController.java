@@ -58,7 +58,7 @@ public  class PostController extends BaseController{
         return Response.success(postService.selectPostDetailById(postId));
     }
 
-    @Admin
+//    @Admin
     @ApiOperation(value = "新增post")
     @PostMapping("/post")
     public Response createPost(@RequestBody PostCreateDTO postCreateDTO){

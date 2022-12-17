@@ -129,6 +129,7 @@ public class PostServiceImpl implements PostService {
         LOGGER.info("create post for title:{}",postCreateDTO.getTitle());
         postMapper.insertPost(postCreateDTO);
         Integer postId = postMapper.selectPostIdByTitle(postCreateDTO.getTitle());
+        LOGGER.info("createPost postId：{} getTagIdList：{}",postId,postCreateDTO.getTagIdList());
         postMapper.insertPostTag(postId,postCreateDTO.getTagIdList());
 
     }

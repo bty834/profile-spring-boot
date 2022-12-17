@@ -1,45 +1,30 @@
 server:
   port: 8888
-  # ssl证书和key
-  ssl:
-    key-store: classpath:btyhub.site.jks
-    key-store-password: 414w211cuu
-    key-store-type: JKS
   servlet:
-    # 应用的访问路径
     context-path: /
-
   tomcat:
-    # tomcat的URI编码
     uri-encoding: UTF-8
-    # 连接数满后的排队数，默认为100
     accept-count: 1000
     threads:
-      # tomcat最大线程数，默认为200
       max: 800
-      # Tomcat启动初始化的线程数，默认值10
       min-spare: 100
+
 mybatis:
   typeAliasesPackage: com.bty.blog.mybatis.entity
   mapper-locations: classpath:mappers/*xml
   config-location: classpath:mybatis-config.xml
-
-#ipfs:
-#  filebase:
-#    endpoint: https://api.filebase.io/v1/ipfs
-#    token: RTI5OTZDMjFDOEI0MkYzMDRBNzA6ZzA3a0RqQTBUVFJZb083NGtSd0Y1cjlJcktndVhIUFdlZFNoVEhMVTpidHktYmxvZw==
-
+# not working now
+ipfs:
+  filebase:
+    endpoint: https://api.filebase.io/v1/ipfs
+    token: RTI5OTZDMjFDOEI0MkYzMDRBNzA6ZzA3a0RqQTBUVFJZb083NGtSd0Y1cjlJcktndVhIUFdlZFNoVEhMVTpidHktYmxvZw==
 
 
 spring:
-
   servlet:
     multipart:
-      # 单个文件大小
       max-file-size:  40MB
-      # 设置总上传的文件大小
       max-request-size:  100MB
-      # 文件上传路径
       location: /usr/local/spring-boot-blog/static/download
   mvc:
     pathmatch:
@@ -50,19 +35,18 @@ spring:
   application:
     name: bty-blog
 
-
+# change to your profile
   profiles:
-    active: dev
+    active: prod
 
-# 日期格式
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
   web:
     resources:
-      # 静态资源访问路径
+      # static resource
       static-locations: /usr/local/spring-boot-blog/static
 
-# PageHelper分页插件
+# PageHelper
 pagehelper:
   helperDialect: mysql
   supportMethodsArguments: true
@@ -77,13 +61,7 @@ token:
   secret: dfjsfer2334re2342fdsx.
 
 
-knife4j:
-  enable: true
-  production: false
-  basic:
-    enable: true
-    username: username
-    password: password
+
 
 captcha:
   enabled: true

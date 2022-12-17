@@ -1,4 +1,6 @@
-# 工程简介
+# Introduction
+a backend of my profile website
 
-# 延伸阅读
+Spring + MySQL + Redis
+
 

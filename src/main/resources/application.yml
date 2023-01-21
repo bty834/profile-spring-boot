@@ -70,6 +70,6 @@ captcha:
 s3:
   name: filebase
   key: E2996C21C8B42F304A70
-  secret: g07kDjA0TTRYoO74kRwF5r9IrKguXHPWedShTHLU
+  secret:
   endpoint: s3.filebase.com
   region: us-east-1

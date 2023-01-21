@@ -13,12 +13,6 @@ mybatis:
   typeAliasesPackage: com.bty.blog.mybatis.entity
   mapper-locations: classpath:mappers/*xml
   config-location: classpath:mybatis-config.xml
-# not working now
-ipfs:
-  filebase:
-    endpoint: https://api.filebase.io/v1/ipfs
-    token: RTI5OTZDMjFDOEI0MkYzMDRBNzA6ZzA3a0RqQTBUVFJZb083NGtSd0Y1cjlJcktndVhIUFdlZFNoVEhMVTpidHktYmxvZw==
-
 
 spring:
   servlet:
@@ -37,7 +31,7 @@ spring:
 
 # change to your profile
   profiles:
-    active: prod
+    active: dev
 
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
@@ -73,3 +67,9 @@ captcha:
   font: 微软雅黑
   expireSeconds: 60
 
+s3:
+  name: filebase
+  key: E2996C21C8B42F304A70
+  secret: g07kDjA0TTRYoO74kRwF5r9IrKguXHPWedShTHLU
+  endpoint: s3.filebase.com
+  region: us-east-1

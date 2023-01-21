@@ -20,9 +20,9 @@ import java.util.concurrent.TimeUnit;
  **/
 @Service
 @RequiredArgsConstructor
-public class tokenServiceImpl implements TokenService {
+public class TokenServiceImpl implements TokenService {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(tokenServiceImpl.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(TokenServiceImpl.class);
 
     @Value("${token.expire-minutes}")
     private Integer expireMinutes;

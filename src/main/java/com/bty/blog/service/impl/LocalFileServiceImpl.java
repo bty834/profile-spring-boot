@@ -1,6 +1,8 @@
 package com.bty.blog.service.impl;
 
 
+import com.bty.blog.entity.FileType;
+import com.bty.blog.entity.S3Key;
 import com.bty.blog.service.FileService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -12,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -20,7 +23,6 @@ import java.util.UUID;
  * @since 1.8
  **/
 @Service
-@Primary
 @RequiredArgsConstructor
 public class LocalFileServiceImpl implements FileService {
 
@@ -32,14 +34,17 @@ public class LocalFileServiceImpl implements FileService {
     private final HttpServletRequest request;
 
     @Override
-    public String getCoverImage(MultipartFile multipartFile, Integer type) {
-        if(type==0){
+    public String getCoverUrl(MultipartFile multipartFile) {
+        String originalFilename = multipartFile.getOriginalFilename();
+        assert originalFilename != null;
+        FileType type = FileType.of(getFileExtention(originalFilename));
+
+        if(type.equals(FileType.IMAGE)){
             return "";
         }
-        if(type==1 || type ==2){
+        if(type.equals(FileType.VIDEO)||type.equals(FileType.AUDIO)){
             return getFileUrl(request,"video.jpg");
         }
-
 
         return getFileUrl(request,"file.jpg");
     }
@@ -50,7 +55,7 @@ public class LocalFileServiceImpl implements FileService {
 
 
     @Override
-    public String storeFile(MultipartFile multipartFile) {
+    public String storeFile(MultipartFile multipartFile, Map<String,Object> meta) {
         String localFilename = UUID.randomUUID() + multipartFile.getOriginalFilename();
         String path = request.getServletContext().getRealPath(DOWNLOAD_DIR) + localFilename;
         LOGGER.info("file:{} have stored in path:{}",multipartFile.getOriginalFilename(),path);

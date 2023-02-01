@@ -34,7 +34,7 @@ public class LocalFileServiceImpl implements FileService {
     private final HttpServletRequest request;
 
     @Override
-    public String getCoverUrl(MultipartFile multipartFile) {
+    public String handleCover(MultipartFile multipartFile) {
         String originalFilename = multipartFile.getOriginalFilename();
         assert originalFilename != null;
         FileType type = FileType.of(getFileExtention(originalFilename));
@@ -56,7 +56,7 @@ public class LocalFileServiceImpl implements FileService {
 
     @Override
     public String storeFile(MultipartFile multipartFile, Map<String,Object> meta) {
-        String localFilename = UUID.randomUUID() + multipartFile.getOriginalFilename();
+        String localFilename = buildFilename(multipartFile.getOriginalFilename());
         String path = request.getServletContext().getRealPath(DOWNLOAD_DIR) + localFilename;
         LOGGER.info("file:{} have stored in path:{}",multipartFile.getOriginalFilename(),path);
         File file = new File(path);

@@ -39,7 +39,7 @@ public class FileController {
 
         FileType fileType = FileType.of(fileService.getFileExtention(originalFilename));
 
-        String coverUrl  = fileService.getCoverUrl(multipartFile);
+        String coverUrl  = fileService.handleCover(multipartFile);
 
         String url = fileService.storeFile(multipartFile,Collections.singletonMap("s3key", S3Key.RECORD));
 

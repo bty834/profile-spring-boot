@@ -4,6 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author bty
@@ -17,6 +18,10 @@ public interface FileService {
         return filename.substring(seperatorIdx + 1).toLowerCase();
     }
 
+    default String buildFilename(String originalFilename){
+        return UUID.randomUUID() + originalFilename;
+    }
+
 
     /**
      * get the cover image of file , if the file type is image , then take de-sampled origin image as cover
@@ -24,12 +29,14 @@ public interface FileService {
      * @param type //0 image,1 video,2 audio,3 PDF,4 WORD,5 EXCEL,6 SLIDE,7 MD,8 OTHER
      * @return cover img url
      */
-    String getCoverUrl(MultipartFile multipartFile) throws IOException;
+    String handleCover(MultipartFile multipartFile) throws IOException;
 
     /**
      * @param multipartFile uploaded file
      * @return file url
      */
     String storeFile(MultipartFile multipartFile, Map<String,Object> meta) throws IOException;
+
+
 
 }

@@ -34,7 +34,7 @@ public abstract class BaseS3FileServiceImpl implements FileService {
     private final AmazonS3 amazonS3;
 
     @Override
-    public String getCoverUrl(MultipartFile multipartFile) throws IOException {
+    public String handleCover(MultipartFile multipartFile) throws IOException {
 
         String originalFileName = multipartFile.getOriginalFilename();
         assert originalFileName != null;
@@ -50,11 +50,19 @@ public abstract class BaseS3FileServiceImpl implements FileService {
         return getCoverUrlFromNonImageFileType(type);
     }
 
+
+
     @Override
     public String storeFile(MultipartFile multipartFile, Map<String,Object> meta) throws IOException {
         String originalFilename = multipartFile.getOriginalFilename();
         LOGGER.info("start filebase uploading of {}", originalFilename);
-        S3Key s3key = (S3Key)meta.get("s3key");
+        S3Key s3key;
+        try {
+            s3key = (S3Key)meta.get("s3key");
+        } catch (Exception e) {
+            LOGGER.error("S3 implementation requires s3key");
+            throw new RuntimeException("S3 implementation requires s3key ");
+        }
         PutObjectResult result = doStore(multipartFile.getInputStream(), originalFilename, s3key.getPrefix());
         return getUrlFromPutObjectResult(result);
     }
@@ -63,7 +71,8 @@ public abstract class BaseS3FileServiceImpl implements FileService {
         PutObjectResult result;
         try {
             ObjectMetadata objectMetadata = new ObjectMetadata();
-            String key = s3KeyPrefix + UUID.randomUUID() + filename;
+            String randomFilename = buildFilename(filename);
+            String key = s3KeyPrefix + randomFilename;
             result = amazonS3.putObject(DEFAULT_BUCKET, key, in, objectMetadata);
             LOGGER.info("filebase uploaded successfully of {}", key);
         } catch (SdkClientException e) {

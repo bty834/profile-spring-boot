@@ -37,7 +37,7 @@ public class FilebaseS3FileServieImpl extends BaseS3FileServiceImpl {
             LOGGER.error("cid is null or empty");
             throw new RuntimeException("cid null or empty");
         }
-        String url = IPFS_GATEWAY + cid;
+        String url = getUrlFromCid(cid);
         LOGGER.info("file url is {}", url);
         return url;
     }
@@ -47,29 +47,33 @@ public class FilebaseS3FileServieImpl extends BaseS3FileServiceImpl {
         String url;
         switch (fileType){
             case VIDEO:
-                url="https://ipfs.filebase.io/ipfs/QmQTxjr7WGhMxuMrdzQxMGTXT4iCNnSN2BfM1FFU8XQxBn";
+                url  = getUrlFromCid("QmQTxjr7WGhMxuMrdzQxMGTXT4iCNnSN2BfM1FFU8XQxBn");
                 break;
             case AUDIO:
-                url="https://ipfs.filebase.io/ipfs/QmYwQ7EN4aEXNSshFjo1U2kSkiqEkpYBVSx1HEqHpu24Yk";
+                url  = getUrlFromCid("QmYwQ7EN4aEXNSshFjo1U2kSkiqEkpYBVSx1HEqHpu24Yk");
                 break;
             case PDF:
-                url="https://ipfs.filebase.io/ipfs/QmQTcMNGJZkxzGN2VwqeYmbWMXi2oHnD6pov4m9oceUfB3";
+                url  = getUrlFromCid("QmQTcMNGJZkxzGN2VwqeYmbWMXi2oHnD6pov4m9oceUfB3");
                 break;
             case WORD:
-                url="https://ipfs.filebase.io/ipfs/QmaHVva1baaqStq3v1HaR1uRaBMXcZoKRe2whSeCLzB9hL";
+                url  = getUrlFromCid("QmaHVva1baaqStq3v1HaR1uRaBMXcZoKRe2whSeCLzB9hL");
                 break;
             case EXCEL:
-                url="https://ipfs.filebase.io/ipfs/QmUifvTpeFrz4aSgXQ7jmbu53XFaL1h7gNVHUhwqGBD4Hf";
+                url  = getUrlFromCid("QmUifvTpeFrz4aSgXQ7jmbu53XFaL1h7gNVHUhwqGBD4Hf");
                 break;
             case PPT:
-                url="https://ipfs.filebase.io/ipfs/QmWPZuZdXY4VQr6EqjWGhBSr4oFLUsJxWJGMbxYfLKTgJJ";
+                url  = getUrlFromCid("QmWPZuZdXY4VQr6EqjWGhBSr4oFLUsJxWJGMbxYfLKTgJJ");
                 break;
             case MD:
-                url="https://ipfs.filebase.io/ipfs/QmUV9Wf7bKxoj6k9y5KY5Yru3nyZbi8zCw4nPPr4Tpe9GP";
+                url  = getUrlFromCid("QmUV9Wf7bKxoj6k9y5KY5Yru3nyZbi8zCw4nPPr4Tpe9GP");
                 break;
             default:
-                url="https://ipfs.filebase.io/ipfs/QmPXnniiYHiFQ9vwLXBX3wBNKGiZUwNCEaVg8tNp5nEReH";
+                url  = getUrlFromCid("QmPXnniiYHiFQ9vwLXBX3wBNKGiZUwNCEaVg8tNp5nEReH");
         }
         return url;
+    }
+
+    private static String getUrlFromCid(String cid){
+        return IPFS_GATEWAY + cid;
     }
 }

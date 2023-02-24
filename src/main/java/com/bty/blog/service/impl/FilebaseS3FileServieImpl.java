@@ -3,11 +3,9 @@ package com.bty.blog.service.impl;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectResult;
 import com.bty.blog.entity.FileType;
-import com.bty.blog.service.FileService;
 import com.google.common.base.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -18,7 +16,6 @@ import java.util.Map;
  * @since 1.8
  **/
 @Service
-@Primary
 public class FilebaseS3FileServieImpl extends BaseS3FileServiceImpl {
     private static final Logger LOGGER = LoggerFactory.getLogger(FilebaseS3FileServieImpl.class);
 

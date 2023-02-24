@@ -23,10 +23,13 @@ import java.util.UUID;
  * @since 1.8
  **/
 @Service
+@Primary
 @RequiredArgsConstructor
 public class LocalFileServiceImpl implements FileService {
 
     public static final String DOWNLOAD_DIR = "/download/";
+    public static final String COVER_DIR = "/download/cover/";
+
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LocalFileServiceImpl.class);
 
@@ -40,13 +43,36 @@ public class LocalFileServiceImpl implements FileService {
         FileType type = FileType.of(getFileExtention(originalFilename));
 
         if(type.equals(FileType.IMAGE)){
-            return "";
+            return getCoverFileUrl(request,"image.png");
         }
-        if(type.equals(FileType.VIDEO)||type.equals(FileType.AUDIO)){
-            return getFileUrl(request,"video.jpg");
+        if(type.equals(FileType.PDF)){
+            return getCoverFileUrl(request,"pdf.png");
+        }
+        if(type.equals(FileType.WORD)){
+            return getCoverFileUrl(request,"word.png");
+        }
+        if(type.equals(FileType.EXCEL)){
+            return getCoverFileUrl(request,"excel.png");
+        }
+        if(type.equals(FileType.PPT)){
+            return getCoverFileUrl(request,"ppt.png");
+        }
+        if(type.equals(FileType.MD)){
+            return getCoverFileUrl(request,"md.png");
+        }
+        if(type.equals(FileType.VIDEO)){
+            return getCoverFileUrl(request,"video.png");
+        }
+        if(type.equals(FileType.AUDIO)){
+            return getCoverFileUrl(request,"audio.png");
         }
 
-        return getFileUrl(request,"file.jpg");
+        return getCoverFileUrl(request,"other.png");
+    }
+
+    public static String getCoverFileUrl(HttpServletRequest request,String fileName){
+        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + COVER_DIR + fileName;
+
     }
 
     public static String getFileUrl(HttpServletRequest request,String fileName){
